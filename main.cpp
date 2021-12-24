@@ -2,25 +2,25 @@
 #include <vector>
 #include <tuple>
 
-const uint mod = 6;
+const int mod = 6;
 const size_t length = 37;
-void dfs(size_t index);
-std::tuple<uint, uint> decode(size_t index);
-inline size_t encode(uint row, uint col);
+void dfs(std::vector<int> &board, std::vector<int> &hands, size_t index);
+std::tuple<int, int> decode(size_t index);
+size_t encode(int row, int col);
 
 int main() {
   std::cout << encode(4, 0) << std::endl;
   return 0;
 }
 
-void dfs(std::vector<uint> &board, size_t index) {
+void dfs(std::vector<int> &board, std::vector<int> &hands, size_t index) {
   if (index == length) {
     return;
   }
   auto [r, c] = decode(index);
 }
 
-std::tuple<uint, uint> decode(size_t index) {
+std::tuple<int, int> decode(size_t index) {
   uint row, col;
 
   if (index < 4) {
@@ -46,10 +46,10 @@ std::tuple<uint, uint> decode(size_t index) {
     col = index - 33 + 3;
   }
 
-  return std::tuple<uint, uint>(row, col);
+  return std::tuple<int, int>(row, col);
 }
 
-inline size_t encode(uint row, uint col) {
+size_t encode(int row, int col) {
   size_t index = -1;
 
   if (row == 0) {
