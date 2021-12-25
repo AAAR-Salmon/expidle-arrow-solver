@@ -130,7 +130,7 @@ void flip_around(std::vector<int> &board, size_t index, int amount) {
 
 index_t next(index_t index) {
   auto [r, c] = index;
-  if (c - r > 3) {
+  if (c == 6 || c - r >= 3) {
     r++;
     c = std::max(r - 3, 0);
   } else {
