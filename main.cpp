@@ -29,11 +29,29 @@ void dfs(std::vector<int> &board, std::vector<int> &hands, size_t index) {
     return;
   }
   auto [r, c] = decode(index);
-  for (int hand = 0; hand < mod; hand++) {
+  // 右端辺での枝刈り
+  if (c == 6 && r > 3 && board[encode(r - 1, c - 1)] != board[encode(r - 1, c)]) {
+    return;
+  }
+  // 下端辺での枝刈り
+  if (r == 6 && c > 3 && board[encode(r - 1, c - 1)] != board[encode(r, c - 1)]) {
+    return;
+  }
+  // 上端、左端辺以外での枝刈り
+  if (r != 0 && c != 0) {
+    // 左上マスを0にするように動かす
+    const int hand = (mod - board[encode(r - 1, c - 1)]) % mod;
     hands[index] = hand;
     flip_around(board, index, hand);
     dfs(board, hands, index + 1);
     flip_around(board, index, mod - hand);
+  } else {
+    for (int hand = 0; hand < mod; hand++) {
+      hands[index] = hand;
+      flip_around(board, index, hand);
+      dfs(board, hands, index + 1);
+      flip_around(board, index, mod - hand);
+    }
   }
 }
 
