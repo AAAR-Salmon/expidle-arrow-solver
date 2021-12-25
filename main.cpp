@@ -7,6 +7,7 @@ const size_t length = 37;
 void dfs(std::vector<int> &board, std::vector<int> &hands, size_t index);
 std::tuple<int, int> decode(size_t index);
 size_t encode(int row, int col);
+void flip_around(std::vector<int> &board, size_t index, int amount);
 
 int main() {
   std::cout << encode(4, 0) << std::endl;
@@ -69,4 +70,22 @@ size_t encode(int row, int col) {
   }
 
   return index;
+}
+
+void flip_around(std::vector<int> &board, size_t index, int amount) {
+  // 正体不明だがちゃんと最初だけ初期化処理が走る
+  static std::array<std::tuple<int, int>, 7u> dpos{
+    dpos[0] = { -1, -1 },
+    dpos[1] = { -1, 0 },
+    dpos[2] = { 0, -1 },
+    dpos[3] = { 0, 0 },
+    dpos[4] = { 0, 1 },
+    dpos[5] = { 1, 0 },
+    dpos[6] = { 1, 1 }
+  };
+  auto [r, c] = decode(index);
+  for (const auto &[dr, dc] : dpos) {
+    board[encode(r + dr, c + dc)] += amount;
+    board[encode(r + dr, c + dc)] %= mod;
+  }
 }
