@@ -8,6 +8,8 @@ void dfs(std::vector<int> &board, std::vector<int> &hands, size_t index);
 std::tuple<int, int> decode(size_t index);
 size_t encode(int row, int col);
 void flip_around(std::vector<int> &board, size_t index, int amount);
+template<typename T>
+void print_vector(std::vector<T> vec);
 
 int main() {
   std::cout << encode(4, 0) << std::endl;
@@ -16,6 +18,7 @@ int main() {
 
 void dfs(std::vector<int> &board, std::vector<int> &hands, size_t index) {
   if (index == length) {
+    print_vector(hands);
     return;
   }
   auto [r, c] = decode(index);
@@ -88,4 +91,12 @@ void flip_around(std::vector<int> &board, size_t index, int amount) {
     board[encode(r + dr, c + dc)] += amount;
     board[encode(r + dr, c + dc)] %= mod;
   }
+}
+
+template<typename T>
+void print_vector(std::vector<T> vec) {
+  for (const auto &v : vec) {
+    std::cout << v << " ";
+  }
+  std::cout << std::endl;
 }
