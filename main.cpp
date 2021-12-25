@@ -4,6 +4,7 @@
 #include <algorithm>
 
 using index_t = std::tuple<int, int>;
+using board_t = std::vector<std::vector<int>>;
 
 const int mod = 6;
 const size_t length = 37;
@@ -13,7 +14,10 @@ size_t encode(int row, int col);
 void flip_around(std::vector<int> &board, size_t index, int amount);
 template<typename T>
 void print_vector(std::vector<T> vec);
+
+index_t next(index_t index);
 bool is_in_board(index_t index);
+void print_board(const board_t board);
 
 int main() {
   std::vector<int> board(length);
@@ -144,10 +148,16 @@ bool is_in_board(index_t index) {
   return std::abs(r - 3) <= 3 && std::abs(c - 3) <= 3 && std::abs(c - r) <= 3;
 }
 
-template<typename T>
-void print_vector(std::vector<T> vec) {
-  for (const auto &v : vec) {
-    std::cout << v << " ";
+void print_board(const board_t board) {
+  for (size_t i = 0; i < board_row; i++) {
+    for (size_t j = 0; j < board_col; j++) {
+      if (is_in_board({ i, j })) {
+        std::cout << board[i][j] << " ";
+      } else {
+        std::cout << "  ";
+      }
+    }
+    std::cout << "\n";
   }
   std::cout << std::endl;
 }
