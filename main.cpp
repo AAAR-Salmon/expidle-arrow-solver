@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <tuple>
+#include <algorithm>
 
 using index_t = std::tuple<int, int>;
 
@@ -12,6 +13,7 @@ size_t encode(int row, int col);
 void flip_around(std::vector<int> &board, size_t index, int amount);
 template<typename T>
 void print_vector(std::vector<T> vec);
+bool is_in_board(index_t index);
 
 int main() {
   std::vector<int> board(length);
@@ -135,6 +137,11 @@ index_t next(index_t index) {
     c++;
   }
   return { r, c };
+}
+
+bool is_in_board(index_t index) {
+  auto [r, c] = index;
+  return std::abs(r - 3) <= 3 && std::abs(c - 3) <= 3 && std::abs(c - r) <= 3;
 }
 
 template<typename T>
