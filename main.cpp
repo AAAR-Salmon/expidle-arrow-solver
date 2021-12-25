@@ -2,6 +2,8 @@
 #include <vector>
 #include <tuple>
 
+using index_t = std::tuple<int, int>;
+
 const int mod = 6;
 const size_t length = 37;
 void dfs(std::vector<int> &board, std::vector<int> &hands, size_t index);
@@ -122,6 +124,17 @@ void flip_around(std::vector<int> &board, size_t index, int amount) {
     board[encode(r + dr, c + dc)] += amount;
     board[encode(r + dr, c + dc)] %= mod;
   }
+}
+
+index_t next(index_t index) {
+  auto [r, c] = index;
+  if (c - r > 3) {
+    r++;
+    c = std::max(r - 3, 0);
+  } else {
+    c++;
+  }
+  return { r, c };
 }
 
 template<typename T>
