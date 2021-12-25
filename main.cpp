@@ -12,7 +12,14 @@ template<typename T>
 void print_vector(std::vector<T> vec);
 
 int main() {
-  std::cout << encode(4, 0) << std::endl;
+  std::vector<int> board(length);
+  std::vector<int> hands(length);
+  for (size_t i = 0; i < length; i++) {
+    std::cout << i << ": ";
+    std::cin >> board[i];
+  }
+
+  dfs(board, hands, 0);
   return 0;
 }
 
@@ -22,6 +29,12 @@ void dfs(std::vector<int> &board, std::vector<int> &hands, size_t index) {
     return;
   }
   auto [r, c] = decode(index);
+  for (int hand = 0; hand < mod; hand++) {
+    hands[index] = hand;
+    flip_around(board, index, hand);
+    dfs(board, hands, index + 1);
+    flip_around(board, index, mod - hand);
+  }
 }
 
 std::tuple<int, int> decode(size_t index) {
